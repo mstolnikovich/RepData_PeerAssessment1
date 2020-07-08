@@ -36,6 +36,7 @@ md <- median(tapply(activity$steps, activity$date,
 Timeline series plot of the 5-minute interval and the average number of steps taken across all days:
 
 ```{r average daily activity pattern}
+library(ggplot2)
 ints <- tapply(activity$steps, activity$interval, 
                mean, na.rm = TRUE, simplify = TRUE)
 ints2 <- unique(activity$interval)
@@ -108,6 +109,7 @@ activity2$weekend[activity2$weekdays == "Monday" | activity2$weekdays == "Tuesda
 Panel plot with a time series of the average steps taken for 5-minute intervals by weekends and weekdays.
 
 ```{r panel plot}
+library(ggplot2)
 subs <- subset(activity2, activity2$weekend == "weekend")
 subs2 <- subset(activity2, activity2$weekend == "weekday")
 intss1 <- tapply(subs$steps, subs$interval, mean, na.rm = TRUE, simplify = TRUE)

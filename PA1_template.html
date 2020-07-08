@@ -393,7 +393,8 @@ md &lt;- median(tapply(activity$steps, activity$date,
 <div id="what-is-the-average-daily-activity-pattern" class="section level2">
 <h2>What is the average daily activity pattern?</h2>
 <p>Timeline series plot of the 5-minute interval and the average number of steps taken across all days:</p>
-<pre class="r"><code>ints &lt;- tapply(activity$steps, activity$interval, 
+<pre class="r"><code>library(ggplot2)
+ints &lt;- tapply(activity$steps, activity$interval, 
                mean, na.rm = TRUE, simplify = TRUE)
 ints2 &lt;- unique(activity$interval)
 avgs &lt;- cbind.data.frame(ints, ints2)
@@ -442,7 +443,8 @@ mdcor &lt;- as.character(median(tapply(activity2$steps, activity2$date, sum, na.
 activity2$weekend[activity2$weekdays == &quot;Sunday&quot; | activity2$weekdays == &quot;Saturday&quot;] &lt;- &quot;weekend&quot;
 activity2$weekend[activity2$weekdays == &quot;Monday&quot; | activity2$weekdays == &quot;Tuesday&quot; | activity2$weekdays == &quot;Wednesday&quot; | activity2$weekdays == &quot;Thursday&quot; | activity2$weekdays == &quot;Friday&quot;] &lt;- &quot;weekday&quot;</code></pre>
 <p>Panel plot with a time series of the average steps taken for 5-minute intervals by weekends and weekdays.</p>
-<pre class="r"><code>subs &lt;- subset(activity2, activity2$weekend == &quot;weekend&quot;)
+<pre class="r"><code>library(ggplot2)
+subs &lt;- subset(activity2, activity2$weekend == &quot;weekend&quot;)
 subs2 &lt;- subset(activity2, activity2$weekend == &quot;weekday&quot;)
 intss1 &lt;- tapply(subs$steps, subs$interval, mean, na.rm = TRUE, simplify = TRUE)
 intss2 &lt;- tapply(subs2$steps, subs2$interval, mean, na.rm = TRUE, simplify = TRUE)

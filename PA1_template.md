@@ -53,6 +53,7 @@ Timeline series plot of the 5-minute interval and the average number of steps ta
 
 
 ```r
+library(ggplot2)
 ints <- tapply(activity$steps, activity$interval, 
                mean, na.rm = TRUE, simplify = TRUE)
 ints2 <- unique(activity$interval)
@@ -136,6 +137,7 @@ Panel plot with a time series of the average steps taken for 5-minute intervals 
 
 
 ```r
+library(ggplot2)
 subs <- subset(activity2, activity2$weekend == "weekend")
 subs2 <- subset(activity2, activity2$weekend == "weekday")
 intss1 <- tapply(subs$steps, subs$interval, mean, na.rm = TRUE, simplify = TRUE)
