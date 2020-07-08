@@ -8,7 +8,8 @@ output:
 ## Loading and preprocessing the data
 Loading activity dataset and transforming factor variable into date format:
 
-```{r data preprocessing}
+
+```r
 activity <- read.csv("activity.csv")
 activity$date <- as.Date(activity$date)
 ```
@@ -16,26 +17,42 @@ activity$date <- as.Date(activity$date)
 ## What is mean total number of steps taken per day?
 Histogram of total number of steps per each day:
 
-```{r steps taken each day}
+
+```r
 library(ggplot2)
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 3.6.2
+```
+
+```r
 spd <- ggplot(activity, aes(date, steps))
 spd + geom_col(fill = "darkseagreen4")
 ```
 
+```
+## Warning: Removed 2304 rows containing missing values (position_stack).
+```
+
+![](PA1_template_files/figure-html/steps taken each day-1.png)<!-- -->
+
 Calculating mean and median:
 
-```{r median and mean}
+
+```r
 m <- mean(tapply(activity$steps, activity$date, 
                   sum, na.rm = TRUE, simplify = TRUE))
 md <- median(tapply(activity$steps, activity$date, 
                     sum, na.rm = TRUE, simplify = TRUE))
 ```
-#### Mean and median total number of steps taken per day are **`r m`** and **`r md`** respectively
+#### Mean and median total number of steps taken per day are **9354.2295082** and **10395** respectively
 
 ## What is the average daily activity pattern?
 Timeline series plot of the 5-minute interval and the average number of steps taken across all days:
 
-```{r average daily activity pattern}
+
+```r
 ints <- tapply(activity$steps, activity$interval, 
                mean, na.rm = TRUE, simplify = TRUE)
 ints2 <- unique(activity$interval)
@@ -45,27 +62,32 @@ timeline1 <- ggplot(avgs, aes(interval, steps))
 timeline1 + geom_line()
 ```
 
+![](PA1_template_files/figure-html/average daily activity pattern-1.png)<!-- -->
+
 Getting number of 5-minute interval with maximum number of steps:
 
-``` {r interval with max avg number of steps}
+
+```r
 maximum <- attr(ints[ints == max(ints)], which = "names")
 ```
 
-#### 5-minute interval that on average across all days has maximum number of steps is interval **`r maximum`**
+#### 5-minute interval that on average across all days has maximum number of steps is interval **835**
 
 ## Imputing missing values
 
 Calculating total number of missing values in a dataset:
 
-```{r calculating number of na`s}
+
+```r
 nas <- subset(activity, is.na(activity$steps))
 totalna <- length(nas$steps)
 ```
-#### Total number of missing values is **`r totalna`**
+#### Total number of missing values is **2304**
 
 Creating a new dataset with missing values filled in:
 
-``` {r}
+
+```r
 narows <- attr(nas, which = "row")
 activity2 <- activity
 for (n in narows) {
@@ -78,20 +100,24 @@ for (n in narows) {
 
 Histogram of total number of steps per each day (missing values filled in):
 
-```{r stepstakeneachday2}
+
+```r
 library(ggplot2)
 spd <- ggplot(activity2, aes(date, steps))
 spd + geom_col(fill = "darkseagreen4")
 ```
 
+![](PA1_template_files/figure-html/stepstakeneachday2-1.png)<!-- -->
+
 Calculating mean and median (missing values filled in):
 
-```{r medianandmean2}
+
+```r
 mcor <- as.character(mean(tapply(activity2$steps, activity2$date, sum, na.rm = TRUE, simplify = TRUE)))
 mdcor <- as.character(median(tapply(activity2$steps, activity2$date, sum, na.rm = TRUE, simplify = TRUE)))
 ```
 
-Mean is `r mcor` and median is `r mdcor`
+Mean is 10766.1886792453 and median is 10766.1886792453
 
 As I was fiiling in NA`s with mean values of corresponding 5-minute interval and there were whole days of missing values, so sum of steps of those days become actual mean and median among all days.
 
@@ -99,7 +125,8 @@ As I was fiiling in NA`s with mean values of corresponding 5-minute interval and
 
 Creating a new factor variable with two levels -- "weekday" and "weekend":
 
-```{r weekends}
+
+```r
 activity2$weekdays <- weekdays(activity2$date)
 activity2$weekend[activity2$weekdays == "Sunday" | activity2$weekdays == "Saturday"] <- "weekend"
 activity2$weekend[activity2$weekdays == "Monday" | activity2$weekdays == "Tuesday" | activity2$weekdays == "Wednesday" | activity2$weekdays == "Thursday" | activity2$weekdays == "Friday"] <- "weekday"
@@ -107,7 +134,8 @@ activity2$weekend[activity2$weekdays == "Monday" | activity2$weekdays == "Tuesda
 
 Panel plot with a time series of the average steps taken for 5-minute intervals by weekends and weekdays.
 
-```{r panel plot}
+
+```r
 subs <- subset(activity2, activity2$weekend == "weekend")
 subs2 <- subset(activity2, activity2$weekend == "weekday")
 intss1 <- tapply(subs$steps, subs$interval, mean, na.rm = TRUE, simplify = TRUE)
@@ -124,6 +152,8 @@ timeline2 <- timeline2 + geom_line()
 timeline2 <- timeline2 + facet_grid(rows = vars(weekend))
 timeline2
 ```
+
+![](PA1_template_files/figure-html/panel plot-1.png)<!-- -->
 
 
 
