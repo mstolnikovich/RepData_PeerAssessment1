@@ -16,7 +16,7 @@ activity$date <- as.Date(activity$date)
 ## What is mean total number of steps taken per day?
 Histogram of total number of steps per each day:
 
-```{r steps taken each day}
+```{r stepstakeneachday}
 library(ggplot2)
 spd <- ggplot(activity, aes(date, steps))
 spd + geom_col(fill = "darkseagreen4")
@@ -24,7 +24,7 @@ spd + geom_col(fill = "darkseagreen4")
 
 Calculating mean and median:
 
-```{r median and mean}
+```{r medianandmean}
 m <- mean(tapply(activity$steps, activity$date, 
                   sum, na.rm = TRUE, simplify = TRUE))
 md <- median(tapply(activity$steps, activity$date, 
@@ -35,7 +35,7 @@ md <- median(tapply(activity$steps, activity$date,
 ## What is the average daily activity pattern?
 Timeline series plot of the 5-minute interval and the average number of steps taken across all days:
 
-```{r average daily activity pattern}
+```{r averagedailyactivitypattern}
 library(ggplot2)
 ints <- tapply(activity$steps, activity$interval, 
                mean, na.rm = TRUE, simplify = TRUE)
@@ -48,7 +48,7 @@ timeline1 + geom_line()
 
 Getting number of 5-minute interval with maximum number of steps:
 
-``` {r interval with max avg number of steps}
+``` {r intervalwithmaxavgnumberofsteps}
 maximum <- attr(ints[ints == max(ints)], which = "names")
 ```
 
@@ -58,7 +58,7 @@ maximum <- attr(ints[ints == max(ints)], which = "names")
 
 Calculating total number of missing values in a dataset:
 
-```{r calculating number of na`s}
+```{r calculatingnumberofnas}
 nas <- subset(activity, is.na(activity$steps))
 totalna <- length(nas$steps)
 ```
@@ -66,7 +66,7 @@ totalna <- length(nas$steps)
 
 Creating a new dataset with missing values filled in:
 
-``` {r}
+``` {r newdataset}
 narows <- attr(nas, which = "row")
 activity2 <- activity
 for (n in narows) {
@@ -108,7 +108,7 @@ activity2$weekend[activity2$weekdays == "Monday" | activity2$weekdays == "Tuesda
 
 Panel plot with a time series of the average steps taken for 5-minute intervals by weekends and weekdays.
 
-```{r panel plot}
+```{r panelplot}
 library(ggplot2)
 subs <- subset(activity2, activity2$weekend == "weekend")
 subs2 <- subset(activity2, activity2$weekend == "weekday")

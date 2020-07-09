@@ -35,7 +35,7 @@ spd + geom_col(fill = "darkseagreen4")
 ## Warning: Removed 2304 rows containing missing values (position_stack).
 ```
 
-![](PA1_template_files/figure-html/steps taken each day-1.png)<!-- -->
+![](PA1_template_files/figure-html/stepstakeneachday-1.png)<!-- -->
 
 Calculating mean and median:
 
@@ -63,7 +63,7 @@ timeline1 <- ggplot(avgs, aes(interval, steps))
 timeline1 + geom_line()
 ```
 
-![](PA1_template_files/figure-html/average daily activity pattern-1.png)<!-- -->
+![](PA1_template_files/figure-html/averagedailyactivitypattern-1.png)<!-- -->
 
 Getting number of 5-minute interval with maximum number of steps:
 
@@ -155,7 +155,7 @@ timeline2 <- timeline2 + facet_grid(rows = vars(weekend))
 timeline2
 ```
 
-![](PA1_template_files/figure-html/panel plot-1.png)<!-- -->
+![](PA1_template_files/figure-html/panelplot-1.png)<!-- -->
 
 
 
